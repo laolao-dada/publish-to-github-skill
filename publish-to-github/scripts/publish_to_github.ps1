@@ -13,6 +13,8 @@ param(
 
     [string]$ReleaseNotes = 'Initial release',
 
+    [string[]]$AssetPaths = @(),
+
     [switch]$SkipTag
 )
 
@@ -123,6 +125,22 @@ if ($LASTEXITCODE -ne 0) {
     }
 } else {
     Write-Host "Release $TagName already exists. Skipping creation."
+}
+
+if ($AssetPaths.Count -gt 0) {
+    Write-Section 'Upload release assets'
+    foreach ($assetPath in $AssetPaths) {
+        if (-not (Test-Path -LiteralPath $assetPath)) {
+            throw "Asset file not found: $assetPath"
+        }
+    }
+
+    gh release upload $TagName $AssetPaths --clobber
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to upload release assets for $TagName."
+    }
+
+    Write-Host "Uploaded assets: $($AssetPaths -join ', ')"
 }
 
 Write-Section 'Result'
