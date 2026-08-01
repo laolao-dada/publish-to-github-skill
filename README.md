@@ -1,32 +1,47 @@
 # publish-to-github-skill
 
-Ò»¸ö¶ÀÁ¢µÄ GitHub ·¢²¼ Skill£¬×¨ÃÅ¸ºÔğ°Ñ±¾µØÏîÄ¿·¢²¼µ½ GitHub£ºµÇÂ¼ GitHub¡¢´´½¨Ô¶³Ì²Ö¿â¡¢ÍÆËÍ·ÖÖ§¡¢Éú³É tag ºÍ GitHub Release¡£
+ä¸€ä¸ªç‹¬ç«‹çš„ GitHub å‘å¸ƒ Skillï¼Œä¸“é—¨è´Ÿè´£æŠŠæœ¬åœ°é¡¹ç›®å‘å¸ƒåˆ° GitHubã€‚å®ƒæ”¯æŒï¼šç™»å½• GitHubã€åˆ›å»ºè¿œç¨‹ä»“åº“ã€æ¨é€åˆ†æ”¯ã€åˆ›å»º Tagï¼Œä»¥åŠé¢å¤–ä¸Šä¼  GitHub Releaseã€‚
 
-## Ä¿±ê
+## ç‰ˆæœ¬
 
-¸Ã Skill Ö»¸ºÔğ·¢²¼Á÷³Ì£¬²»¼ĞÔÓÈÎºÎÆäËû¹¦ÄÜ¡£
+- 0.2.0
+- æ–°å¢åŠŸèƒ½ï¼šæ”¯æŒâ€œé™„åŠ ä¸Šä¼  releaseâ€æµç¨‹
 
-## Ä¿Â¼½á¹¹
+## ç›®æ ‡
+
+è¿™ä¸ª Skill åªè´Ÿè´£ GitHub å‘å¸ƒæµç¨‹ï¼Œä¸å¤¹æ‚ä»»ä½•å…¶ä»–åŠŸèƒ½ã€‚
+
+## ç›®å½•ç»“æ„
 
 ```text
 publish-to-github-skill/
-©À©¤©¤ LICENSE
-©À©¤©¤ README.md
-©À©¤©¤ skills/
-©¦   ©¸©¤©¤ publish-to-github/
-©¦       ©À©¤©¤ SKILL.md
-©¦       ©À©¤©¤ agents/
-©¦       ©¦   ©¸©¤©¤ openai.yaml
-©¦       ©¸©¤©¤ scripts/
-©¦           ©¸©¤©¤ publish_to_github.ps1
+â”œâ”€â”€ LICENSE
+â”œâ”€â”€ README.md
+â”œâ”€â”€ publish-to-github/
+â”‚   â”œâ”€â”€ SKILL.md
+â”‚   â”œâ”€â”€ agents/
+â”‚   â”‚   â””â”€â”€ openai.yaml
+â”‚   â””â”€â”€ scripts/
+â”‚       â””â”€â”€ publish_to_github.ps1
 ```
 
-## ¿ìËÙ¿ªÊ¼
+## å¿«é€Ÿå¼€å§‹
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\skills\publish-to-github\scripts\publish_to_github.ps1 -RepoName your-name/your-repo -Visibility public -TagName v0.1.0 -ReleaseTitle "v0.1.0"
+powershell -ExecutionPolicy Bypass -File .\publish-to-github\scripts\publish_to_github.ps1 -RepoName your-name/your-repo -Visibility public -TagName v0.2.0 -ReleaseTitle "v0.2.0" -ReleaseNotes "Add release upload support"
 ```
 
-## ËµÃ÷
+## æ–°å¢åŠŸèƒ½è¯´æ˜
 
-Õâ¸ö²Ö¿âÊÇ¶ÀÁ¢·¢²¼ skill£¬µ¥¶ÀÉÏ´«µ½ GitHub£¬±ÜÃâºÍÔ­À´µÄÖªÊ¶¿¨Æ¬ skill »ìÔÚÒ»Æğ¡£
+### é™„åŠ ä¸Šä¼  release
+
+0.2 ç‰ˆæœ¬æ–°å¢ï¼š
+
+- æ”¯æŒåˆ›å»ºå¹¶æ¨é€ tag
+- æ”¯æŒé¢å¤–ä¸Šä¼  GitHub Release
+- è‹¥ release å·²å­˜åœ¨ï¼Œåˆ™è·³è¿‡é‡å¤åˆ›å»º
+- è‹¥ tag å·²å­˜åœ¨ï¼Œåˆ™è·³è¿‡é‡å¤åˆ›å»º
+
+## è¯´æ˜
+
+è¿™ä¸ªä»“åº“æ˜¯ç‹¬ç«‹å‘å¸ƒ skillï¼Œå•ç‹¬ä¸Šä¼ åˆ° GitHubï¼Œé¿å…å’ŒåŸå§‹çŸ¥è¯†å¡ç‰‡ skill æ··åœ¨ä¸€èµ·ã€‚

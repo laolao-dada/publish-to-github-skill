@@ -1,6 +1,11 @@
 # publish-to-github
 
-一个用于 GitHub 一键发布的 WorkBuddy Skill。它会在 Windows 环境中按标准流程：校验 Git/gh、登录 GitHub、创建远程仓库、推送分支、创建 tag、生成 GitHub Release。
+一个用于 GitHub 一键发布的 WorkBuddy Skill。它会在 Windows 环境中按标准流程：校验 Git/gh、登录 GitHub、创建远程仓库、推送分支、创建 tag，并可额外上传 GitHub Release。
+
+## 版本
+
+- 0.2.0
+- 新增功能：附加上传 release
 
 ## 1. 解决什么问题
 
@@ -83,3 +88,12 @@ powershell -ExecutionPolicy Bypass -File .\skills\publish-to-github\scripts\publ
 ## 8. 说明
 
 这个 Skill 适合本地开发环境中的标准化发布工作流。真正的 GitHub 账号、仓库名和可见性，仍由用户最终确认。
+
+## 9. 0.2.0 更新说明
+
+新增附加上传 release 功能：
+
+- 自动检查 tag 是否已存在
+- 自动检查 release 是否已存在
+- 若已存在则跳过重复创建
+- 适合需要发布新版本时附带 release 说明的场景
