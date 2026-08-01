@@ -40,4 +40,4 @@ gh repo create $resolvedRepo $visibilityFlag --source . --remote origin --push
 - 脚本会自动检查远程仓库和 Release 是否已存在
 - 如果 tag 已存在，则跳过创建
 - 如果 release 已存在，则跳过创建
-- 上传资源文件是可选的，由 `AssetPaths` 控制1
+- 上传资源文件是可选的，由 `AssetPaths` 控制问问
