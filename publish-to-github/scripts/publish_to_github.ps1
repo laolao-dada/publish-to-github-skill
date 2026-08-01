@@ -7,9 +7,9 @@ param(
 
     [string]$Branch = 'main',
 
-    [string]$TagName = 'v0.2.0',
+    [string]$TagName = 'v0.2.1',
 
-    [string]$ReleaseTitle = 'v0.2.0',
+    [string]$ReleaseTitle = 'v0.2.1',
 
     [string]$ReleaseNotes = 'Add release upload support',
 
@@ -85,8 +85,15 @@ if ($LASTEXITCODE -eq 0) {
 
 Write-Section 'Create repository'
 $resolvedRepo = Resolve-GitHubRepoIdentifier -InputName $RepoName
-$repoExists = gh repo view $resolvedRepo --json name --jq '.name' 2>$null
-if ($LASTEXITCODE -ne 0) {
+$previousErrorActionPreference = $ErrorActionPreference
+$ErrorActionPreference = 'Continue'
+$repoExists = $false
+gh repo view $resolvedRepo --json name --jq '.name' 2>$null
+if ($LASTEXITCODE -eq 0) {
+    $repoExists = $true
+}
+$ErrorActionPreference = $previousErrorActionPreference
+if (-not $repoExists) {
     $visibilityFlag = if ($Visibility -eq 'public') { '--public' } else { '--private' }
     gh repo create $resolvedRepo $visibilityFlag --source . --remote origin --push
     if ($LASTEXITCODE -ne 0) {
@@ -103,7 +110,7 @@ if ($LASTEXITCODE -ne 0) {
 
 if (-not $SkipTag) {
     Write-Section 'Create and push tag'
-    git rev-parse --verify "refs/tags/$TagName" *> $null
+    git show-ref --verify --quiet "refs/tags/$TagName" 2>$null
     if ($LASTEXITCODE -ne 0) {
         git tag -a $TagName -m $ReleaseTitle
         git push origin $TagName
@@ -116,8 +123,15 @@ if (-not $SkipTag) {
 }
 
 Write-Section 'Create GitHub Release'
-$releaseExists = gh release view $TagName 2>$null
-if ($LASTEXITCODE -ne 0) {
+$previousErrorActionPreference = $ErrorActionPreference
+$ErrorActionPreference = 'Continue'
+$releaseExists = $false
+gh release view $TagName 2>$null
+if ($LASTEXITCODE -eq 0) {
+    $releaseExists = $true
+}
+$ErrorActionPreference = $previousErrorActionPreference
+if (-not $releaseExists) {
     $releaseArgs = @('release', 'create', $TagName, '--title', $ReleaseTitle, '--notes', $ReleaseNotes)
     gh @releaseArgs
     if ($LASTEXITCODE -ne 0) {
