@@ -1,0 +1,54 @@
+---
+name: publish-to-github
+description: 将本地 Git 项目按一键流程发布到 GitHub：检查 gh 登录、创建仓库、推送分支、生成 tag 和 release。
+agent_created: true
+---
+
+# Publish to GitHub
+
+## Purpose
+
+用于把本地 Git 项目一键发布到 GitHub。适用于 Windows PowerShell 环境，优先使用 GitHub CLI (`gh`).
+
+## When to use
+
+- 用户要上传本地项目到 GitHub
+- 用户要发布新版本并生成 release
+- 用户已初始化 Git，但还没有创建远程仓库
+
+## Input
+
+- `RepoName`: GitHub 仓库名
+- `Visibility`: `public` 或 `private`
+- `Branch`: 目标分支，默认 `main`
+- `TagName`: Git tag 名称，如 `v0.1.0`
+- `ReleaseTitle`: GitHub Release 标题
+- `ReleaseNotes`: 发布说明（可选）
+
+## Flow
+
+1. 检查当前目录是否为 Git 仓库
+2. 检查 `gh` 是否已安装
+3. 若未登录，则启动浏览器授权
+4. 创建 GitHub 仓库并推送当前分支
+5. 若 tag 不存在，则创建并推送
+6. 创建 GitHub Release
+7. 返回仓库 URL 和发布结果
+
+## Quick start
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\skills\publish-to-github\scripts\publish_to_github.ps1 -RepoName article-to-knowledge-cards -Visibility public -TagName v0.1.0 -ReleaseTitle "v0.1.0"
+```
+
+## Safety
+
+- 不覆盖已存在的远程仓库
+- 不输出 token、密码或密钥
+- 若未处于 Git 仓库状态，先要求初始化
+
+## Command
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\skills\publish-to-github\scripts\publish_to_github.ps1 -RepoName article-to-knowledge-cards -Visibility public -TagName v0.1.0 -ReleaseTitle "v0.1.0"
+```
