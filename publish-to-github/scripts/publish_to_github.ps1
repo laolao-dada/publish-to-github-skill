@@ -7,11 +7,11 @@ param(
 
     [string]$Branch = 'main',
 
-    [string]$TagName = 'v0.1.0',
+    [string]$TagName = 'v0.2.0',
 
-    [string]$ReleaseTitle = 'v0.1.0',
+    [string]$ReleaseTitle = 'v0.2.0',
 
-    [string]$ReleaseNotes = 'Initial release',
+    [string]$ReleaseNotes = 'Add release upload support',
 
     [string[]]$AssetPaths = @(),
 

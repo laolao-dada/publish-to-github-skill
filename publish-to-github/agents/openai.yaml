@@ -21,7 +21,7 @@ agent_created: true
 - `RepoName`: GitHub 仓库名
 - `Visibility`: `public` 或 `private`
 - `Branch`: 目标分支，默认 `main`
-- `TagName`: Git tag 名称，如 `v0.1.0`
+- `TagName`: Git tag 名称，如 `v0.2.0`
 - `ReleaseTitle`: GitHub Release 标题
 - `ReleaseNotes`: 发布说明（可选）
 
@@ -38,7 +38,7 @@ agent_created: true
 ## Quick start
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\skills\publish-to-github\scripts\publish_to_github.ps1 -RepoName article-to-knowledge-cards -Visibility public -TagName v0.1.0 -ReleaseTitle "v0.1.0"
+powershell -ExecutionPolicy Bypass -File .\skills\publish-to-github\scripts\publish_to_github.ps1 -RepoName article-to-knowledge-cards -Visibility public -TagName v0.2.0 -ReleaseTitle "v0.2.0" -ReleaseNotes "Add release upload support"
 ```
 
 ## Safety
@@ -50,5 +50,5 @@ powershell -ExecutionPolicy Bypass -File .\skills\publish-to-github\scripts\publ
 ## Command
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\skills\publish-to-github\scripts\publish_to_github.ps1 -RepoName article-to-knowledge-cards -Visibility public -TagName v0.1.0 -ReleaseTitle "v0.1.0"
+powershell -ExecutionPolicy Bypass -File .\skills\publish-to-github\scripts\publish_to_github.ps1 -RepoName article-to-knowledge-cards -Visibility public -TagName v0.2.0 -ReleaseTitle "v0.2.0" -ReleaseNotes "Add release upload support"
 ```
