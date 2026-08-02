@@ -5,7 +5,7 @@ description: >
   触发词：发布到 GitHub、上传到 GitHub、push to GitHub、publish to GitHub、github 发布、github release。
   工作时先检查并补全 README.md / LICENSE / .gitignore，再通过 gh CLI 创建仓库、推送代码、创建 tag 和 release。
 agent_created: true
-version: 0.3.0
+version: 0.4.0
 ---
 
 # Publish to GitHub

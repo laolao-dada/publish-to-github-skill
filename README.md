@@ -11,7 +11,8 @@ WorkBuddy Skill：将本地 Git 项目按 GitHub 规范整理并一键发布。
 
 ## 版本
 
-**v0.3.0** — 重大更新
+**v0.4.0** — 修复 release 更新 bug
+- **v0.3.0** — 重大更新
 - 新增 GitHub 格式准备阶段（README / LICENSE / .gitignore）
 - 修复 PowerShell 脚本中 `Start-Process` 和 `Read-Host` 的 bug
 - 添加 SKILL.md YAML frontmatter

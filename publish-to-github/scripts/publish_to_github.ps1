@@ -15,7 +15,9 @@ param(
 
     [string[]]$AssetPaths = @(),
 
-    [switch]$SkipTag
+    [switch]$SkipTag,
+
+    [switch]$UpdateRelease
 )
 
 $ErrorActionPreference = 'Stop'
@@ -182,14 +184,29 @@ if ($LASTEXITCODE -eq 0) {
 $ErrorActionPreference = $prevErrorAction
 
 if (-not $releaseExists) {
+    # Create new release
     gh release create $TagName --title $ReleaseTitle --notes $ReleaseNotes
     if ($LASTEXITCODE -ne 0) {
         Write-Host "[ERROR] Failed to create release for '$TagName'." -ForegroundColor Red
         exit 1
     }
     Write-Host "  Release created."
+} elseif ($UpdateRelease) {
+    # Update existing release: delete then recreate
+    Write-Host "  Release exists. Updating (delete + recreate)..."
+    gh release delete $TagName --yes
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[ERROR] Failed to delete existing release for '$TagName'." -ForegroundColor Red
+        exit 1
+    }
+    gh release create $TagName --title $ReleaseTitle --notes $ReleaseNotes
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[ERROR] Failed to recreate release for '$TagName'." -ForegroundColor Red
+        exit 1
+    }
+    Write-Host "  Release updated."
 } else {
-    Write-Host "  Release already exists. Skipping."
+    Write-Host "  Release already exists. Use -UpdateRelease to force update."
 }
 
 # --- Step 8: Upload assets (optional) ---

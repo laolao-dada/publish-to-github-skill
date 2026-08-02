@@ -4,7 +4,7 @@ description: >
   将本地项目按 GitHub 规范整理并一键发布：自动检测或生成 README.md、LICENSE、.gitignore，
   然后通过 gh CLI 创建仓库、推送代码、打 tag、创建 Release。适用于任何想快速把本地项目
   变成 GitHub 规范仓库的场景。
-version: 0.3.0
+version: 0.4.0
 agent_created: true
 ---
 
@@ -60,6 +60,7 @@ powershell -ExecutionPolicy Bypass -File .\publish-to-github\scripts\publish_to_
 | `-ReleaseNotes` | 否 | `Initial release` | Release 说明 |
 | `-AssetPaths` | 否 | `@()` | 要上传的附件路径数组 |
 | `-SkipTag` | 否 | `$false` | 跳过创建 tag |
+| `-UpdateRelease` | 否 | `$false` | 当 release 已存在时，强制删除并重建 |
 
 ## 前置条件
 
