@@ -1,43 +1,47 @@
 # publish-to-github-skill
 
-一个用于把本地 Git 仓库发布到 GitHub 的技能。它可以自动创建仓库、推送分支、创建 tag、生成 GitHub Release，并支持上传发布资源文件。
+WorkBuddy Skill：将本地 Git 项目按 GitHub 规范整理并一键发布。
 
-## 功能特点
+## 做了什么
 
-- 检查 Git 和 GitHub CLI 是否已安装
-- 若未登录 GitHub，则自动打开登录页面
-- 若仓库不存在，则创建新的 GitHub 仓库
-- 推送当前分支到远程仓库
-- 自动创建并推送 tag（如果不存在）
-- 自动创建 GitHub Release（如果不存在）
-- 支持上传自定义资产文件
-- 支持 public 和 private 两种可见性
+| 阶段 | 内容 |
+|------|------|
+| **格式准备** | 自动检测并补全 README.md、LICENSE、.gitignore |
+| **一键发布** | 通过 gh CLI 创建仓库、推送代码、打 tag、创建 Release |
 
-## 快速使用
+## 版本
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\publish-to-github\scripts\publish_to_github.ps1 `
-  -RepoName laolao-dada/publish-to-github-skill `
-  -Visibility public `
-  -Branch main `
-  -TagName v0.2.1 `
-  -ReleaseTitle "v0.2.1" `
-  -ReleaseNotes "Update README and release metadata"
-```
+**v0.3.0** — 重大更新
+- 新增 GitHub 格式准备阶段（README / LICENSE / .gitignore）
+- 修复 PowerShell 脚本中 `Start-Process` 和 `Read-Host` 的 bug
+- 添加 SKILL.md YAML frontmatter
+- 改善错误处理和日志输出
 
-## 源代码目录说明
-
-脚本默认会把当前工作目录当作源代码目录来发布：
+## 安装
 
 ```powershell
-gh repo create $resolvedRepo $visibilityFlag --source . --remote origin --push
+Copy-Item -Recurse publish-to-github "$env:USERPROFILE\.workbuddy\skills\"
 ```
 
-如果你想发布别的目录，而不是当前文件夹，可以把 `.` 换成你想发布的目录路径。
+## 使用
 
-## 说明
+在 WorkBuddy 中说：
 
-- 脚本会自动检查远程仓库和 Release 是否已存在
-- 如果 tag 已存在，则跳过创建
-- 如果 release 已存在，则跳过创建
-- 上传资源文件是可选的，由 `AssetPaths` 控制
+> 帮我把这个项目发布到 GitHub
+
+Skill 会自动：
+1. 检查/生成 README.md、LICENSE、.gitignore
+2. git commit 整理后的文件
+3. 询问仓库名、可见性、版本号
+4. 推送到 GitHub + 创建 Release
+
+## 文件结构
+
+```
+publish-to-github/
+├── SKILL.md              # Skill 定义和工作流程
+├── agents/
+│   └── openai.yaml       # Agent 配置
+└── scripts/
+    └── publish_to_github.ps1  # PowerShell 发布脚本
+```

@@ -1,54 +1,62 @@
 ---
 name: publish-to-github
-description: 将本地 Git 项目按一键流程发布到 GitHub：检查 gh 登录、创建仓库、推送分支、生成 tag 和 release。
+description: >
+  将本地 Git 项目按 GitHub 规范整理并一键发布到 GitHub。
+  触发词：发布到 GitHub、上传到 GitHub、push to GitHub、publish to GitHub、github 发布、github release。
+  工作时先检查并补全 README.md / LICENSE / .gitignore，再通过 gh CLI 创建仓库、推送代码、创建 tag 和 release。
 agent_created: true
+version: 0.3.0
 ---
 
 # Publish to GitHub
 
 ## Purpose
 
-用于把本地 Git 项目一键发布到 GitHub。适用于 Windows PowerShell 环境，优先使用 GitHub CLI (`gh`).
+将本地 Git 项目按两阶段流程整理并发布到 GitHub：
+1. **格式准备**：检查/生成 README.md、LICENSE、.gitignore
+2. **一键发布**：通过 gh CLI 创建仓库、推送、打 tag、创建 Release
 
 ## When to use
 
-- 用户要上传本地项目到 GitHub
-- 用户要发布新版本并生成 release
-- 用户已初始化 Git，但还没有创建远程仓库
-
-## Input
-
-- `RepoName`: GitHub 仓库名
-- `Visibility`: `public` 或 `private`
-- `Branch`: 目标分支，默认 `main`
-- `TagName`: Git tag 名称，如 `v0.2.0`
-- `ReleaseTitle`: GitHub Release 标题
-- `ReleaseNotes`: 发布说明（可选）
+- 用户要把本地项目上传到 GitHub
+- 用户要发布新版本并生成 Release
+- 用户的项目缺少 README / LICENSE / .gitignore
+- 用户说"发布到 GitHub"、"上传到 GitHub"、"github release"等
 
 ## Flow
 
-1. 检查当前目录是否为 Git 仓库
-2. 检查 `gh` 是否已安装
-3. 若未登录，则启动浏览器授权
-4. 创建 GitHub 仓库并推送当前分支
-5. 若 tag 不存在，则创建并推送
-6. 创建 GitHub Release
-7. 返回仓库 URL 和发布结果
+### Phase 1: GitHub 格式准备
 
-## Quick start
+1. 检查项目根目录是否有 `README.md`，没有则根据项目结构自动生成
+2. 检查是否有 `LICENSE`，没有则询问用户选择（MIT / Apache-2.0 / GPL-3.0 / 跳过）
+3. 检查是否有 `.gitignore`，没有则根据项目语言自动生成
+4. 执行 `git add -A` 和 `git commit -m "chore: prepare GitHub-compliant repo structure"`
+
+### Phase 2: 发布到 GitHub
+
+运行 PowerShell 脚本：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\skills\publish-to-github\scripts\publish_to_github.ps1 -RepoName article-to-knowledge-cards -Visibility public -TagName v0.2.0 -ReleaseTitle "v0.2.0" -ReleaseNotes "Add release upload support"
+powershell -ExecutionPolicy Bypass -File .\publish-to-github\scripts\publish_to_github.ps1 `
+  -RepoName "owner/repo-name" `
+  -Visibility public `
+  -Branch main `
+  -TagName "v0.1.0" `
+  -ReleaseTitle "v0.1.0" `
+  -ReleaseNotes "发布的说明"
 ```
+
+### 询问用户
+
+运行脚本前，确认以下信息：
+- 仓库名（owner/repo 格式）
+- 可见性（public / private）
+- Tag 版本号
+- Release 说明
 
 ## Safety
 
 - 不覆盖已存在的远程仓库
 - 不输出 token、密码或密钥
-- 若未处于 Git 仓库状态，先要求初始化
-
-## Command
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\skills\publish-to-github\scripts\publish_to_github.ps1 -RepoName article-to-knowledge-cards -Visibility public -TagName v0.2.0 -ReleaseTitle "v0.2.0" -ReleaseNotes "Add release upload support"
-```
+- 仅 push 当前分支，不影响其他分支
+- 所有操作需用户确认后才执行
